@@ -10,33 +10,38 @@
     <script>
         // URL de destino
         const redirectUrl = "https://www.youtube.com/watch?v=8IdBAysf-U4";
-
+        
         // Función para redirigir al usuario
         function redirect() {
+            console.log("Redireccionando a:", redirectUrl); // Depuración
             window.location.href = redirectUrl;
         }
 
         // Función para contar la visita
         function countVisit() {
-            // Llamada al servidor para incrementar el contador
+            console.log("Iniciando conteo de visita..."); // Depuración
             fetch('/contador')
                 .then(response => {
+                    console.log("Respuesta del servidor recibida:", response.status); // Depuración
                     if (response.ok) {
-                        // Si el contador se actualizó con éxito, redirige
+                        console.log("Contador actualizado correctamente."); // Depuración
                         redirect();
                     } else {
-                        console.error('Error al actualizar el contador');
+                        console.error("Error al actualizar el contador:", response.statusText); // Depuración
                         redirect(); // Redirige aunque falle la actualización del contador
                     }
                 })
                 .catch(error => {
-                    console.error('Error en la conexión con el servidor:', error);
+                    console.error("Error en la conexión con el servidor:", error); // Depuración
                     redirect(); // Redirige aunque falle la conexión con el servidor
                 });
         }
 
         // Llama a la función cuando la página se carga
-        window.onload = countVisit;
+        window.onload = () => {
+            console.log("Página cargada, iniciando proceso de conteo y redirección."); // Depuración
+            countVisit();
+        };
     </script>
 </body>
 </html>
