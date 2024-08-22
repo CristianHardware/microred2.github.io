@@ -8,28 +8,35 @@
 <body>
     <p>Redirigiendo...</p>
     <script>
-         // URL de destino
-    const redirectUrl = "https://erainforma.enap.cl/erainforma/erainforma-inicio";
+        // URL de destino
+        const redirectUrl = "https://www.youtube.com/watch?v=8IdBAysf-U4";
 
-    // Función para redirigir al usuario
-    function redirect() {
-        window.location.href = redirectUrl;
-    }
+        // Función para redirigir al usuario
+        function redirect() {
+            window.location.href = redirectUrl;
+        }
 
-    // Función para contar la visita
-    function countVisit() {
-        fetch('/contador') // Asume que tienes un servidor configurado para esta ruta
-            .then(response => {
-                if (response.ok) {
-                    // Si el contador se actualizó con éxito, redirige
-                    redirect();
-                }
-            })
-            .catch(error => console.error('Error al contar la visita:', error));
-    }
+        // Función para contar la visita
+        function countVisit() {
+            // Llamada al servidor para incrementar el contador
+            fetch('/contador')
+                .then(response => {
+                    if (response.ok) {
+                        // Si el contador se actualizó con éxito, redirige
+                        redirect();
+                    } else {
+                        console.error('Error al actualizar el contador');
+                        redirect(); // Redirige aunque falle la actualización del contador
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en la conexión con el servidor:', error);
+                    redirect(); // Redirige aunque falle la conexión con el servidor
+                });
+        }
 
-    // Llama a la función cuando la página se carga
-    window.onload = countVisit;
+        // Llama a la función cuando la página se carga
+        window.onload = countVisit;
     </script>
 </body>
 </html>
